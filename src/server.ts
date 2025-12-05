@@ -2,30 +2,22 @@ import express, { Request, Response } from "express";
 import cofig from "./config";
 import initDB from "./config/db";
 import { authRoutes } from "./modules/auth/auth.routes";
+import { userRoutes } from "./modules/users/user.routes";
 const app = express();
 const PORT = cofig.port;
 
-
 // parser
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true }));
 //DATABASE CONNECT
 
 initDB();
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Vehicle Rental System Server");
-});
+//Auth Routes
+app.use("/api/v1/auth/", authRoutes);
 
-//SIGNUP
-
-app.use("/api/v1/auth/",authRoutes);
-
-//login
-
-// app.post("/api/v1/auth/signin" , (req:Request ,res: Response)=>{
-
-// })
+//User Routes
+app.use("/api/v1/users", userRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on post ${PORT}`);
