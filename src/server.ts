@@ -16,13 +16,10 @@ initDB();
 
 //Auth Routes
 app.use("/api/v1/auth/", authRoutes);
-
 //User Routes
 app.use("/api/v1/users", userRoutes);
-
 //Vehicles Routes
-
-app.use("/api/v1/vehicles" ,vehiclesRoutes)
+app.use("/api/v1/vehicles", vehiclesRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on post ${PORT}`);

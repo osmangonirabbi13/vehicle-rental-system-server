@@ -14,6 +14,52 @@ const createVehicles = async (req: Request, res: Response) => {
   }
 };
 
+const getVehicle = async (req: Request, res: Response) => {
+  try {
+    const result = await vehicleServices.getVehicle();
+    res.status(200).json({
+      success: true,
+      message: result.rows.length
+        ? "Vehicles retrieved successfully"
+        : "No vehicles found",
+      data: result.rows,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+const getVehicleDetails = async (req: Request, res: Response) => {
+  try {
+    const result = await vehicleServices.getVehicleDetails(
+      req.params.id as string
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "vehicle not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Vehicle retrieved successfully",
+      data: result.rows[0],
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
 export const vehicleControllers = {
   createVehicles,
+  getVehicle,
+  getVehicleDetails,
 };
