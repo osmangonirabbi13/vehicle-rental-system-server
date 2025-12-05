@@ -3,6 +3,7 @@ import cofig from "./config";
 import initDB from "./config/db";
 import { authRoutes } from "./modules/auth/auth.routes";
 import { userRoutes } from "./modules/users/user.routes";
+import { vehiclesRoutes } from "./modules/vehicles/vehicles.routes";
 const app = express();
 const PORT = cofig.port;
 
@@ -18,6 +19,10 @@ app.use("/api/v1/auth/", authRoutes);
 
 //User Routes
 app.use("/api/v1/users", userRoutes);
+
+//Vehicles Routes
+
+app.use("/api/v1/vehicles" ,vehiclesRoutes)
 
 app.listen(PORT, () => {
   console.log(`Server is running on post ${PORT}`);
