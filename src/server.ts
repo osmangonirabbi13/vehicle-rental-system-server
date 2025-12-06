@@ -15,16 +15,18 @@ app.use(express.urlencoded({ extended: true }));
 
 initDB();
 
+app.get("/", (req: Request, res: Response) => {
+  res.send("Vehicle rental system server");
+});
+
 //Auth Routes
 app.use("/api/v1/auth/", authRoutes);
 //User Routes
 app.use("/api/v1/users", userRoutes);
 //Vehicles Routes
 app.use("/api/v1/vehicles", vehiclesRoutes);
-
 //Booking Routes
-
-app.use("/api/v1/bookings" , bookingRoutes)
+app.use("/api/v1/bookings", bookingRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on post ${PORT}`);

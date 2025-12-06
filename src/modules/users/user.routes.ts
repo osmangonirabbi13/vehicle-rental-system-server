@@ -1,8 +1,9 @@
 import express from "express";
 import { userControllers } from "./user.controller";
+import auth from "../../middleware/auth";
 
 const router = express.Router();
-router.get("/", userControllers.getUser);
+router.get("/", auth("admin"), userControllers.getUser);
 router.put("/:id", userControllers.updateUser);
-router.delete("/:id", userControllers.deleteUser);
+router.delete("/:id", auth("admin"), userControllers.deleteUser);
 export const userRoutes = router;

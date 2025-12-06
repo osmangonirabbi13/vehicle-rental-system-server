@@ -2,6 +2,12 @@ import { Request, Response } from "express";
 import { userServices } from "./user.service";
 
 const getUser = async (req: Request, res: Response) => {
+  if (req.user?.role !== "admin") {
+    return res.status(403).json({
+      success: false,
+      message: "Forbidden: only admin can see users",
+    });
+  }
   try {
     const result = await userServices.getUser();
     res.status(200).json({
@@ -50,6 +56,12 @@ const updateUser = async (req: Request, res: Response) => {
 };
 
 const deleteUser = async (req: Request, res: Response) => {
+  if (req.user?.role !== "admin") {
+    return res.status(403).json({
+      success: false,
+      message: "Forbidden: only admin can create vehicles",
+    });
+  }
   try {
     const result = await userServices.deleteUser(req.params.id!);
 

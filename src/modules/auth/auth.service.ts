@@ -6,7 +6,6 @@ import config from "../../config";
 const createUser = async (payload: Record<string, any>) => {
   const { name, email, password, phone, role } = payload;
   const hashedPass = await bcrypt.hash(password, 10);
-
   const result = await pool.query(
     `INSERT INTO users (name, email, password, phone, role)
      VALUES ($1, $2, $3, $4, $5) RETURNING *`,
@@ -34,11 +33,14 @@ const loginUser = async (email: string, password: string) => {
   }
 
   const token = jwt.sign(
-    { name: user.name, email: user.email, role: user.role },
-    config.jwtSecret as string,
     {
-      expiresIn: "15d",
-    }
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    },
+    config.jwtSecret as string,
+    { expiresIn: "15d" }
   );
 
   console.log({ token });

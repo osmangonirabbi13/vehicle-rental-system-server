@@ -2,6 +2,13 @@ import { Request, Response } from "express";
 import { vehicleServices } from "./vehicle.service";
 
 const createVehicles = async (req: Request, res: Response) => {
+  if (req.user?.role !== "admin") {
+    return res.status(403).json({
+      success: false,
+      message: "Forbidden: only admin can create vehicles",
+    });
+  }
+
   try {
     const result = await vehicleServices.createVehicles(req.body);
     res.status(201).json({
@@ -59,6 +66,13 @@ const getVehicleDetails = async (req: Request, res: Response) => {
 };
 
 const updateVehicle = async (req: Request, res: Response) => {
+  if (req.user?.role !== "admin") {
+    return res.status(403).json({
+      success: false,
+      message: "Forbidden: only admin can update  vehicles",
+    });
+  }
+
   try {
     const {
       vehicle_name,
@@ -98,6 +112,13 @@ const updateVehicle = async (req: Request, res: Response) => {
 };
 
 const deleteVehicle = async (req: Request, res: Response) => {
+  if (req.user?.role !== "admin") {
+    return res.status(403).json({
+      success: false,
+      message: "Forbidden: only admin can delete vehicles",
+    });
+  }
+
   try {
     const result = await vehicleServices.deleteVehicle(req.params.id!);
 
@@ -125,5 +146,5 @@ export const vehicleControllers = {
   getVehicle,
   getVehicleDetails,
   deleteVehicle,
-  updateVehicle
+  updateVehicle,
 };

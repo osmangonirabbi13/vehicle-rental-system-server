@@ -7,7 +7,7 @@ const router = Router();
 router.post("/",auth("admin") ,vehicleControllers.createVehicles);
 router.get("/", vehicleControllers.getVehicle);
 router.get("/:id", vehicleControllers.getVehicleDetails);
-router.put("/:id" , vehicleControllers.updateVehicle)
-router.delete("/:id", vehicleControllers.deleteVehicle);
+router.put("/:id" ,auth("admin") , vehicleControllers.updateVehicle)
+router.delete("/:id",auth("admin") , vehicleControllers.deleteVehicle);
 
 export const vehiclesRoutes = router;
