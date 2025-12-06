@@ -1,22 +1,37 @@
-import  {Request , Response} from 'express';
-import { userServices } from './auth.service';
+import { Request, Response } from "express";
+import { authServices } from "./auth.service";
 
-
-
-//create user / signup
 const createUser = async (req: Request, res: Response) => {
   try {
-    const result = await userServices.createUser(req.body)
+    const result = await authServices.createUser(req.body);
     res.status(201).json({
-      "success":true,
+      success: true,
       message: "User registered successfully",
       user: result.rows[0],
     });
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message });
   }
-}
-
-export const userControllers = {
-  createUser,
 };
+
+const loginUser = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  console.log(req.body);
+
+  try {
+    const result = await authServices.loginUser(email, password);
+    console.log(result);
+    res.status(201).json({
+      success: true,
+      message: "login sucessfull",
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+export const authControllers = { createUser, loginUser };
