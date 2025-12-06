@@ -4,6 +4,7 @@ import initDB from "./config/db";
 import { authRoutes } from "./modules/auth/auth.routes";
 import { userRoutes } from "./modules/users/user.routes";
 import { vehiclesRoutes } from "./modules/vehicles/vehicles.routes";
+import { bookingRoutes } from "./modules/Bookings/booking.routes";
 const app = express();
 const PORT = cofig.port;
 
@@ -20,6 +21,10 @@ app.use("/api/v1/auth/", authRoutes);
 app.use("/api/v1/users", userRoutes);
 //Vehicles Routes
 app.use("/api/v1/vehicles", vehiclesRoutes);
+
+//Booking Routes
+
+app.use("/api/v1/bookings" , bookingRoutes)
 
 app.listen(PORT, () => {
   console.log(`Server is running on post ${PORT}`);
